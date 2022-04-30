@@ -14,6 +14,7 @@
     >
       <nuxt-link :to="{ name: 'empresa' }">Empresa</nuxt-link>
       <nuxt-link to="/servicos">Serviços</nuxt-link>
+      <nuxt-link to="/produtos">Produtos</nuxt-link>
     </div>
     <div>
       <h1 class="font-bold">Empresa</h1>
