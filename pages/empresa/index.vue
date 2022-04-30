@@ -18,7 +18,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  middleware: 'auth',
+/*   middleware() {
+    console.log("middleware empresa do Jamal")
+  } */
+};
 </script>
 
 <style>
