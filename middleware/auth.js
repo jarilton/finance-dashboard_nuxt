@@ -1,7 +1,7 @@
 export default ({ redirect }) => {
     console.log("middleware auth")
 
-    const loggedIn = false
+    const loggedIn = true
 
     if (!loggedIn) {
         return redirect('/')

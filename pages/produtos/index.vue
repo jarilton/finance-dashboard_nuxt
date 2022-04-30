@@ -4,6 +4,14 @@
       <h1 class="text-lg font-bold">Produtos</h1>
       <nuxt-link to="/produtos/produtoA"> Produto A </nuxt-link>
       <nuxt-link to="/produtos/produtoB"> Produto B </nuxt-link>
+      <br /><br />
+      <div
+        v-for="post in posts"
+        :key="post.id"
+        class="border-b border-gray-400 py-3"
+      >
+        {{ post.title }}
+      </div>
       <p>
         It is a long established fact that a reader will be distracted by the
         readable content of a page when looking at its layout. The point of
@@ -20,7 +28,24 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "",
+
+  data() {
+    return {};
+  },
+
+  async asyncData({ $axios }) {
+    const posts = await $axios.$get(
+      "https://jsonplaceholder.typicode.com/posts?_limit=3"
+    );
+    return {
+      posts,
+    };
+  },
+
+  methods: {},
+};
 </script>
 
 <style>
