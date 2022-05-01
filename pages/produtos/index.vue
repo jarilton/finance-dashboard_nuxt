@@ -31,6 +31,22 @@
 export default {
   name: "",
 
+  head() {
+    return {
+      title: 'Produtos',
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: "Descrição dos serviços",
+        },
+      ],
+      bodyAttrs: {
+        class: "bg-yellow-200",
+      },
+    };
+  },
+
   data() {
     return {};
   },

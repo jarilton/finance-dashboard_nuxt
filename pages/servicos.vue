@@ -32,8 +32,21 @@
 export default {
   name: "",
 
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        { hid: 'description', name: 'description', content: 'Descrição dos serviços' },
+      ],
+      bodyAttrs: {
+        class: 'bg-gray-200'
+      }
+    }
+  },
+
   data() {
     return {
+      title: '',
       services: [],
     };
   },
@@ -43,6 +56,19 @@ export default {
       "https://jsonplaceholder.typicode.com/users?_limit=3"
     );
   },
+
+  //boas praticas criar o Created, pois ele é um hook e fica limpo
+  created() {
+    this.getTitle()
+  },
+
+  methods: {
+    getTitle() {
+      setTimeout(() => {
+        this.title = 'Serviços'
+      }, 3000);
+    }
+  }
 };
 </script>
 
