@@ -6,6 +6,12 @@
       <template #popper> Help me fund my Open Source work! </template>
     </VTooltip>
 
+    <br /><br />
+
+    {{ $config }}
+
+    <br /><br />
+
     <pre>
       {{ $store.state.user }}
     </pre>
@@ -23,6 +29,14 @@ export default {
 
   data() {
     return {};
+  },
+
+  asyncData({$config}) {
+    console.log($config)
+  },
+
+  created() {
+    console.log(this.$config.facebook_api_key)
   },
 
   mounted() {
