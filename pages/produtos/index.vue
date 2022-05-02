@@ -53,7 +53,7 @@ export default {
 
   async asyncData({ $axios }) {
     const posts = await $axios.$get(
-      "https://jsonplaceholder.typicode.com/posts?_limit=3"
+      "/posts?_limit=3"
     );
     return {
       posts,

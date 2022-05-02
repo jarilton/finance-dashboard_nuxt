@@ -1,5 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  target: 'static',
+
   head: {
     title: 'Dashboard Financeiro',
     htmlAttrs: {
@@ -33,6 +35,7 @@ export default {
     '@/plugins/my-plugin',
     '@/plugins/dayjs',
     '@/plugins/vtooltip',
+    '@/plugins/axios',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
