@@ -1,0 +1,36 @@
+{
+  "transactions": [
+    {
+      "id": 3,
+      "description": "Salário",
+      "amount": 3000,
+      "date": "2022-01-03",
+      "categoryId": 2
+    },
+    {
+      "id": 4,
+      "description": "Freela",
+      "amount": 350,
+      "date": "2022-01-03",
+      "categoryId": 2
+    }
+  ],
+  "categories": [
+    {
+      "id": 2,
+      "name": "2 - Salário e freelas"
+    },
+    {
+      "name": "vreverfver",
+      "id": 14
+    },
+    {
+      "name": "vreverfver",
+      "id": 16
+    },
+    {
+      "name": "ver",
+      "id": 18
+    }
+  ]
+}

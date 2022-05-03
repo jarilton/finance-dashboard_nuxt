@@ -16,8 +16,8 @@
               <div class="hidden sm:block sm:ml-6">
                 <div class="flex space-x-4">
                   <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                  <a
-                    href="#"
+                  <nuxt-link
+                    to="/"
                     class="
                       bg-gray-900
                       text-white
@@ -29,10 +29,10 @@
                     "
                     aria-current="page"
                     >Home
-                  </a>
+                  </nuxt-link>
 
-                  <a
-                    href="#"
+                  <nuxt-link
+                    to="/categories"
                     class="
                       text-gray-300
                       hover:bg-gray-700 hover:text-white
@@ -42,12 +42,12 @@
                       text-sm
                       font-medium
                     "
-                    >Categorias
-                  </a>
+                  >
+                    Categorias
+                  </nuxt-link>
                 </div>
               </div>
             </div>
-
             <div
               class="
                 absolute
@@ -135,10 +135,10 @@
           <div>
             <div class="flex items-center space-x-3">
               <div>
-                <AppFormInput />
+                <AppFormInput v-model="name" @keyup="addCategory" />
               </div>
 
-              <AppButton> Adicionar </AppButton>
+              <AppButton @click="addCategory"> Adicionar </AppButton>
             </div>
           </div>
 
@@ -165,7 +165,11 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr class="bg-white">
+              <tr
+                v-for="category in categories"
+                :key="category.id"
+                class="bg-white"
+              >
                 <td
                   class="
                     px-6
@@ -176,8 +180,14 @@
                     text-gray-900
                   "
                 >
-                  <div class="w-72">
-                    <AppFormInput />
+                  <div v-if="category.isUpdating" class="w-72">
+                    <AppFormInput
+                      v-model="category.name"
+                      @keyup.enter="updateCategory(category)"
+                    />
+                  </div>
+                  <div v-else>
+                    {{ category.name }}
                   </div>
                 </td>
 
@@ -191,45 +201,17 @@
                     space-x-4
                   "
                 >
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900"
+                  <a
+                    href="#"
+                    class="text-indigo-600 hover:text-indigo-900"
+                    @click.stop.prevent="toUpdate(category)"
                     >Edit
                   </a>
 
-                  <a href="#" class="text-red-600 hover:text-red-900"
-                    >Excluir
-                  </a>
-                </td>
-              </tr>
-
-              <tr class="bg-white">
-                <td
-                  class="
-                    px-6
-                    py-4
-                    whitespace-nowrap
-                    text-sm
-                    font-medium
-                    text-gray-900
-                  "
-                >
-                  Categoria 2
-                </td>
-
-                <td
-                  class="
-                    px-6
-                    py-4
-                    whitespace-nowrap
-                    text-right text-sm
-                    font-medium
-                    space-x-4
-                  "
-                >
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900"
-                    >Edit
-                  </a>
-
-                  <a href="#" class="text-red-600 hover:text-red-900"
+                  <a
+                    href="#"
+                    class="text-red-600 hover:text-red-900"
+                    @click.stop.prevent="deleteCategory(category.id)"
                     >Excluir
                   </a>
                 </td>
@@ -256,6 +238,50 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  async asyncData({ store }) {
+    return {
+      categories: await store
+        .dispatch("categories/getCategories")
+        .then((response) =>
+          response.map((obj) => ({ ...obj, isUpdating: false }))
+        ),
+    };
+  },
+  methods: {
+    deleteCategory(id) {
+      this.$store.dispatch("categories/deleteCategory", id).then(() => {
+        const idx = this.categories.findIndex((obj) => obj.id === id);
+        this.categories.splice(idx, 1);
+      });
+    },
+    toUpdate(category) {
+      category.isUpdating = true;
+    },
+    updateCategory(category) {
+      const data = {
+        name: category.name,
+      };
+      this.$store
+        .dispatch("categories/updateCategory", {
+          id: category.id,
+          data,
+        })
+        .then(() => {
+          category.isUpdating = false;
+        });
+    },
+    addCategory() {
+      if (!this.name) {
+        return;
+      }
+      const data = {
+        name: this.name,
+      };
+      this.$store.dispatch("categories/addCategory", data).then((response) => {
+        this.categories.push(response);
+        this.name = "";
+      });
+    },
+  },
 };
 </script>

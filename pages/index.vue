@@ -16,8 +16,8 @@
               <div class="hidden sm:block sm:ml-6">
                 <div class="flex space-x-4">
                   <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                  <a
-                    href="#"
+                  <nuxt-link
+                    to="/"
                     class="
                       bg-gray-900
                       text-white
@@ -28,11 +28,12 @@
                       font-medium
                     "
                     aria-current="page"
-                    >Home</a
                   >
+                    Home
+                  </nuxt-link>
 
-                  <a
-                    href="#"
+                  <nuxt-link
+                    to="/categories"
                     class="
                       text-gray-300
                       hover:bg-gray-700 hover:text-white
@@ -42,8 +43,9 @@
                       text-sm
                       font-medium
                     "
-                    >Categorias</a
                   >
+                    Categorias
+                  </nuxt-link>
                 </div>
               </div>
             </div>
