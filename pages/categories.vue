@@ -225,9 +225,9 @@
 </template>
 
 <script>
-import AppButton from "~/components/AppButton";
-import AppFormInput from "~/components/AppFormInput";
-import AppFormLabel from "~/components/AppFormLabel";
+import AppButton from "~/components/UI/AppButton";
+import AppFormInput from "~/components/UI/AppFormInput";
+import AppFormLabel from "~/components/UI/AppFormLabel";
 export default {
   name: "categoriesPage",
   components: {
