@@ -35,9 +35,7 @@
           Cancelar
         </a>
 
-        <AppButton @click="updateTransaction"> 
-          Editar 
-        </AppButton>
+        <AppButton @click="updateTransaction"> Editar </AppButton>
       </div>
     </div>
   </div>
@@ -84,17 +82,20 @@ export default {
 
   methods: {
     updateTransaction() {
-      const data = {
-        date: this.localTransaction.date,
-        description: this.localTransaction.description,
-        amount: this.localTransaction.amount,
-        categoryId: this.localTransaction.categoryId,
-      };
-
-      this.$store.dispatch("transactions/updateTransaction", {
-        id: this.transaction.id,
-        data,
-      });
+      this.$store
+        .dispatch("transactions/updateTransaction", {
+          id: this.transaction.id,
+          data: this.localTransaction,
+        })
+        .then((response) => {
+          this.$emit("update", {
+            ...response,
+            category: this.categories.find(
+              (obj) => obj.id == this.localTransaction.categoryId
+            ),
+          });
+          this.onCancel();
+        });
     },
     onCancel() {
       this.$emit("onCancel");

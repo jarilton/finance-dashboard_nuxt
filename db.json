@@ -3,7 +3,7 @@
     {
       "id": 1,
       "description": "Pagamento de domínio .com.br",
-      "amount": 40,
+      "amount": "-40",
       "date": "2022-01-01",
       "categoryId": 1
     },
@@ -17,7 +17,7 @@
     {
       "id": 3,
       "description": "Salário",
-      "amount": 3000,
+      "amount": "-3000",
       "date": "2022-01-03",
       "categoryId": 2
     },
@@ -30,37 +30,37 @@
     },
     {
       "id": 5,
-      "description": "IPVA",
-      "amount": 750,
-      "date": "2022-01-07",
-      "categoryId": 3
+      "description": "IPVA 2023",
+      "amount": "-750",
+      "date": "2022-01-10",
+      "categoryId": "2"
     },
     {
       "id": 6,
-      "description": "Cinema",
+      "description": "Cinemark",
       "amount": 60,
       "date": "2022-01-10",
-      "categoryId": 4
+      "categoryId": "3"
     },
     {
       "id": 7,
-      "description": "Lanchonete",
-      "amount": 100,
+      "description": "Lanchonete 10",
+      "amount": "4578",
       "date": "2022-01-10",
-      "categoryId": 4
+      "categoryId": "2"
     },
     {
       "id": 8,
-      "description": "Google Meet",
-      "amount": 100,
+      "description": "Google stock",
+      "amount": "100",
       "date": "2022-01-15",
-      "categoryId": 5
+      "categoryId": "1"
     },
     {
       "date": "2022-05-01",
-      "amount": "2001",
+      "amount": "-2001",
       "description": "Jamel James",
-      "categoryId": "3",
+      "categoryId": "4",
       "id": 9
     }
   ],

@@ -28,6 +28,7 @@
       <div class="flex items-center space-x-4 ml-auto">
         <div class="flex items-center">
           <svg
+            v-if="transaction.amount > 0"
             class="w-4 h-4 text-green-600"
             fill="none"
             stroke="currentColor"
@@ -41,8 +42,30 @@
               d="M12 6v6m0 0v6m0-6h6m-6 0H6"
             ></path>
           </svg>
-
-          <div class="font-bold">{{ transaction.amount }}</div>
+          <svg
+            v-else
+            class="w-4 h-4 text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20 12H4"
+            ></path>
+          </svg>
+          <div class="font-bold">
+            {{
+              new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+                signDisplay: "never"
+              }).format(transaction.amount)
+            }}
+          </div>
         </div>
 
         <button @click="isUpdating = !isUpdating">
@@ -63,9 +86,10 @@
         </button>
       </div>
     </div>
-    <TransactionUpdate 
-      v-if="isUpdating" 
+    <TransactionUpdate
+      v-if="isUpdating"
       :transaction="transaction"
+      @update="onUpdate"
       @onCancel="isUpdating = false"
     />
   </div>
@@ -92,6 +116,13 @@ export default {
     return {
       isUpdating: false,
     };
+  },
+
+  methods: {
+    onUpdate(transaction) {
+      console.log("Pai");
+      this.$emit("update", transaction);
+    },
   },
 };
 </script>
