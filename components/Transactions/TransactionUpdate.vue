@@ -1,34 +1,28 @@
 <template>
-  <div class="container">
-    <div
-      class="
-        my-4
-        space-y-4
-        border-2 border-indigo-200 border-dashed
-        bg-indigo-50
-        p-5
-        rounded-xl
-      "
-    >
+  <div class="template">
+    <div class="my-4 mt-10 space-y-4">
       <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
         <div>
           <AppFormLabel>Data da transação</AppFormLabel>
-          <AppFormInput v-model="form.date" type="date" />
+          <AppFormInput v-model="localTransaction.date" type="date" />
         </div>
 
         <div>
           <AppFormLabel>Valor</AppFormLabel>
-          <AppFormInput v-model="form.amount" type="number" />
+          <AppFormInput v-model="localTransaction.amount" type="number" />
         </div>
 
         <div>
           <AppFormLabel>Descrição</AppFormLabel>
-          <AppFormInput v-model="form.description" />
+          <AppFormInput v-model="localTransaction.description" />
         </div>
 
         <div>
           <AppFormLabel>Categoria</AppFormLabel>
-          <AppFormSelect v-model="form.categoryId" :options="categories" />
+          <AppFormSelect
+            v-model="localTransaction.categoryId"
+            :options="categories"
+          />
         </div>
       </div>
 
@@ -41,7 +35,9 @@
           Cancelar
         </a>
 
-        <AppButton @click="addTransaction"> Adicionar </AppButton>
+        <AppButton @click="updateTransaction"> 
+          Editar 
+        </AppButton>
       </div>
     </div>
   </div>
@@ -52,39 +48,53 @@ import AppButton from "~/components/UI/AppButton";
 import AppFormInput from "~/components/UI/AppFormInput";
 import AppFormLabel from "~/components/UI/AppFormLabel";
 import AppFormSelect from "~/components/UI/AppFormSelect";
+
 export default {
-  name: "TransactionAdd",
+  name: "TransactionUpdate",
+
   components: {
     AppButton,
     AppFormInput,
     AppFormLabel,
     AppFormSelect,
   },
+
+  props: {
+    transaction: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+
   data() {
     return {
-      form: {
-        date: "",
-        amount: 0,
-        description: "",
-        categoryId: "",
+      localTransaction: {
+        date: this.transaction.date,
+        description: this.transaction.description,
+        amount: this.transaction.amount,
+        categoryId: this.transaction.categoryId,
       },
       categories: [],
     };
   },
+
   async fetch() {
     this.categories = await this.$store.dispatch("categories/getCategories");
   },
+
   methods: {
-    addTransaction() {
-      //console.log(this.form)
-      this.$store
-        .dispatch("transactions/addTransaction", this.form)
-        .then((response) => {
-          this.$emit("after-add", {
-            ...response,
-            category: this.categories.find(obj => obj.id == this.form.categoryId)
-          });
-        });
+    updateTransaction() {
+      const data = {
+        date: this.localTransaction.date,
+        description: this.localTransaction.description,
+        amount: this.localTransaction.amount,
+        categoryId: this.localTransaction.categoryId,
+      };
+
+      this.$store.dispatch("transactions/updateTransaction", {
+        id: this.transaction.id,
+        data,
+      });
     },
     onCancel() {
       this.$emit("onCancel");
