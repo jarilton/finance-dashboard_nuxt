@@ -141,21 +141,7 @@
           @onCancel="isAdding = false"
         />
 
-        <div
-          class="mt-6 pb-6 flex items-center space-x-4 border-b border-gray-300"
-        >
-          <div>
-            <AppFormLabel>Descrição</AppFormLabel>
-            <AppFormInput />
-          </div>
-
-          <div>
-            <AppFormLabel>Categoria</AppFormLabel>
-            <AppFormSelect
-              :options="[{ name: 'Licença de softwares', id: 1 }]"
-            />
-          </div>
-        </div>
+        <TransactionFilter @filter="onFilter" />
 
         <div v-for="(group, index) in transactionsGrouped" :key="index">
           <div class="mb-1">
@@ -180,6 +166,7 @@
 import { groupBy, orderBy } from "lodash";
 import TransactionAdd from "~/components/Transactions/TransactionAdd";
 import Transaction from "~/components/Transactions/Transaction";
+import TransactionFilter from "~/components/Transactions/TransactionFilter";
 import AppButton from "~/components/UI/AppButton";
 import AppFormInput from "~/components/UI/AppFormInput";
 import AppFormLabel from "~/components/UI/AppFormLabel";
@@ -194,6 +181,7 @@ export default {
     AppFormSelect,
     TransactionAdd,
     Transaction,
+    TransactionFilter,
   },
 
   async asyncData({ store }) {
@@ -224,6 +212,13 @@ export default {
         (obj) => obj.id == transaction.id
       );
       this.transactions.splice(index, 1, transaction);
+    },
+    onFilter(filter) {
+      this.$store
+        .dispatch("transactions/getTransactions", filter)
+        .then((response) => {
+          this.transactions = response;
+        });
     },
   },
 };
